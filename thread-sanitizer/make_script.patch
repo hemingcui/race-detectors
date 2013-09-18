@@ -1,0 +1,12 @@
+--- get_and_build_tsan.sh	2012-05-04 04:14:25.000000000 -0400
++++ get_and_build_tsan.sh.new	2013-09-17 23:43:34.171407589 -0400
+@@ -46,6 +46,9 @@
+ # Build Valgind.
+ (cd $TOPDIR/third_party &&
+  ./update_valgrind.sh &&
++ pushd valgrind &&
++ patch -p1 < ../../../automake.patch &&
++ popd &&
+  ./build_and_install_valgrind.sh $VALGRIND_INST_ROOT )
+ 
+ (cd $TOPDIR/tsan &&
