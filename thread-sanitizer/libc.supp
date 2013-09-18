@@ -1,0 +1,15 @@
+{
+<std::shared_ptr>
+ThreadSanitizer:Race
+...
+fun:std::_Sp_counted_base::_M_release
+fun:std::__shared_count::~__shared_count
+fun:std::__shared_ptr::~__shared_ptr
+}
+{
+<std::arena_thread_freeres>
+ThreadSanitizer:Race
+fun:arena_thread_freeres
+fun:__libc_thread_freeres
+fun:start_thread
+}
