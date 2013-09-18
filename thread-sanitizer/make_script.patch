@@ -1,5 +1,5 @@
 --- get_and_build_tsan.sh	2012-05-04 04:14:25.000000000 -0400
-+++ get_and_build_tsan.sh.new	2013-09-17 23:43:34.171407589 -0400
++++ get_and_build_tsan.sh.new	2013-09-18 00:26:14.859318588 -0400
 @@ -46,6 +46,10 @@
  # Build Valgind.
  (cd $TOPDIR/third_party &&
@@ -11,3 +11,11 @@
   ./build_and_install_valgrind.sh $VALGRIND_INST_ROOT )
  
  (cd $TOPDIR/tsan &&
+@@ -57,6 +61,7 @@
+ 
+ # Test
+ (cd $TOPDIR/unittest &&
++ sed -i -e "s/-Werror//g" Makefile
+  make all -s -j4 OS=${VG_OS} ARCH=${VG_ARCH} OPT=1 STATIC=0 &&
+  echo "Should run TSan demo now..." &&
+  $TSAN --color bin/demo_tests-${VG_OS}-${VG_ARCH}-O1 --gtest_filter="DemoTests.RaceReportDemoTest" )
