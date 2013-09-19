@@ -1,6 +1,6 @@
-SRC=micro.cpp
-EXE=micro
-ARGS=16 100
+SRC=micro4.cpp
+EXE=micro4
+ARGS=
 all:$(SRC)
 	g++ -g -O0 $(SRC) -o $(EXE) -lpthread
 tsan-test:all
