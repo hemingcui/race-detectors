@@ -21,7 +21,7 @@ void* thread_func_1(void* arg) {
     pthread_mutex_unlock(&mu);
 }
 void* thread_func_2(void* arg) {
-sleep(1);
+//sleep(1);
     pthread_mutex_lock(&mu);
     pthread_mutex_unlock(&mu);
     sum+=2;
