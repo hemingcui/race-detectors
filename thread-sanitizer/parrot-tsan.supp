@@ -3,415 +3,153 @@
   ThreadSanitizer:Race
   fun:sem_wait
   fun:tern::RecorderRT::pthreadCreate
-  fun:tern_pthread_create
-  fun:__tern_prog_begin
-  fun:tern_init_func
+	...
 }
 {
   <Put your suppression name here>
   ThreadSanitizer:Race
   fun:tern::RRScheduler::wait_t::wait
-  fun:tern::RecorderRT::pthreadMutexInit
-  fun:tern_pthread_mutex_init
-  fun:pthread_mutex_init
-  fun:main
+	...
 }
 {
   <Put your suppression name here>
   ThreadSanitizer:Race
   fun:tern::Serializer::incTurnCount
-  fun:tern::RRScheduler::incTurnCount
-  fun:tern::RecorderRT::pthreadMutexInit
-  fun:tern_pthread_mutex_init
-  fun:pthread_mutex_init
-  fun:main
+	...
 }
 {
   <Put your suppression name here>
   ThreadSanitizer:Race
   fun:tern::RRScheduler::putTurn
-  fun:tern::RecorderRT::pthreadMutexInit
-  fun:tern_pthread_mutex_init
-  fun:pthread_mutex_init
-  fun:main
-}
-{
-  <Put your suppression name here>
-  ThreadSanitizer:Race
-  fun:tern::RRScheduler::putTurn
-  fun:tern::RecorderRT::pthreadMutexInit
-  fun:tern_pthread_mutex_init
-  fun:pthread_mutex_init
-  fun:main
-}
-{
-  <Put your suppression name here>
-  ThreadSanitizer:Race
-  fun:tern::RRScheduler::putTurn
-  fun:tern::RecorderRT::pthreadMutexInit
-  fun:tern_pthread_mutex_init
-  fun:pthread_mutex_init
-  fun:main
-}
-{
-  <Put your suppression name here>
-  ThreadSanitizer:Race
-  fun:tern::RRScheduler::putTurn
-  fun:tern::RecorderRT::pthreadMutexInit
-  fun:tern_pthread_mutex_init
-  fun:pthread_mutex_init
-  fun:main
-}
-{
-  <Put your suppression name here>
-  ThreadSanitizer:Race
-  fun:tern::RRScheduler::putTurn
-  fun:tern::RecorderRT::pthreadMutexInit
-  fun:tern_pthread_mutex_init
-  fun:pthread_mutex_init
-  fun:main
-}
-{
-  <Put your suppression name here>
-  ThreadSanitizer:Race
-  fun:tern::RRScheduler::putTurn
-  fun:tern::RecorderRT::pthreadMutexInit
-  fun:tern_pthread_mutex_init
-  fun:pthread_mutex_init
-  fun:main
+	...
 }
 {
   <Put your suppression name here>
   ThreadSanitizer:Race
   fun:tern::RRScheduler::nextRunnable
-  fun:tern::RRScheduler::next
-  fun:tern::RRScheduler::putTurn
-  fun:tern::RecorderRT::pthreadMutexInit
-  fun:tern_pthread_mutex_init
-  fun:pthread_mutex_init
-  fun:main
+	...
 }
 {
   <Put your suppression name here>
   ThreadSanitizer:Race
   fun:tern::RRScheduler::wait_t::post
-  fun:tern::RRScheduler::putTurn
-  fun:tern::RecorderRT::pthreadMutexInit
-  fun:tern_pthread_mutex_init
-  fun:pthread_mutex_init
-  fun:main
+	...
 }
 {
   <Put your suppression name here>
   ThreadSanitizer:Race
   fun:tern::RecorderRT::pthreadCreate
-  fun:tern_pthread_create
-  fun:pthread_create
-  fun:main
+	...
 }
 {
   <Put your suppression name here>
   ThreadSanitizer:Race
   fun:tern::RRScheduler::tryPutTurn
-  fun:tern::RRScheduler::idleThreadCondWait
-  fun:tern_idle_cond_wait
-  fun:idle_thread
-  fun:__tern_thread_func
+	...
 }
 {
   <Put your suppression name here>
   ThreadSanitizer:Race
   fun:std::_List_node_base::_M_hook
-  fun:tern::RRScheduler::idleThreadCondWait
-  fun:tern_idle_cond_wait
-  fun:idle_thread
-  fun:__tern_thread_func
-}
-{
-  <Put your suppression name here>
-  ThreadSanitizer:Race
-  fun:tern::RRScheduler::nextRunnable
-  fun:tern::RRScheduler::next
-  fun:tern::RRScheduler::idleThreadCondWait
-  fun:tern_idle_cond_wait
-  fun:idle_thread
-  fun:__tern_thread_func
-}
-{
-  <Put your suppression name here>
-  ThreadSanitizer:Race
-  fun:tern::RRScheduler::wait_t::post
-  fun:tern::RRScheduler::idleThreadCondWait
-  fun:tern_idle_cond_wait
-  fun:idle_thread
-  fun:__tern_thread_func
+	...
 }
 {
   <Put your suppression name here>
   ThreadSanitizer:Race
   fun:tern::RRScheduler::fireTimeouts
-  fun:tern::RRScheduler::incTurnCount
-  fun:tern::RecorderRT::threadBegin
-  fun:tern_thread_begin
-  fun:__tern_thread_func
-}
-{
-  <Put your suppression name here>
-  ThreadSanitizer:Race
-  fun:tern::RRScheduler::fireTimeouts
-  fun:tern::RRScheduler::incTurnCount
-  fun:tern::RecorderRT::threadBegin
-  fun:tern_thread_begin
-  fun:__tern_thread_func
-}
-{
-  <Put your suppression name here>
-  ThreadSanitizer:Race
-  fun:tern::RRScheduler::fireTimeouts
-  fun:tern::RRScheduler::incTurnCount
-  fun:tern::RecorderRT::threadBegin
-  fun:tern_thread_begin
-  fun:__tern_thread_func
-}
-{
-  <Put your suppression name here>
-  ThreadSanitizer:Race
-  fun:tern::RecorderRT::pthreadCreate
-  fun:tern_pthread_create
-  fun:pthread_create
-  fun:main
-}
-{
-  <Put your suppression name here>
-  ThreadSanitizer:Race
-  fun:tern::RRScheduler::nextRunnable
-  fun:tern::RRScheduler::next
-  fun:tern::RRScheduler::putTurn
-  fun:tern::RecorderRT::pthreadMutexLock
-  fun:tern_pthread_mutex_lock
-  fun:pthread_mutex_lock
-  fun:thread_func_1
-  fun:__tern_thread_func
-}
-{
-  <Put your suppression name here>
-  ThreadSanitizer:Race
-  fun:tern::RRScheduler::nextRunnable
-  fun:tern::RRScheduler::next
-  fun:tern::RRScheduler::putTurn
-  fun:tern::RecorderRT::pthreadMutexLock
-  fun:tern_pthread_mutex_lock
-  fun:pthread_mutex_lock
-  fun:thread_func_1
-  fun:__tern_thread_func
-}
-{
-  <Put your suppression name here>
-  ThreadSanitizer:Race
-  fun:tern::RRScheduler::wait_t::post
-  fun:tern::RRScheduler::putTurn
-  fun:tern::RecorderRT::pthreadMutexLock
-  fun:tern_pthread_mutex_lock
-  fun:pthread_mutex_lock
-  fun:thread_func_1
-  fun:__tern_thread_func
+	...
 }
 {
   <Put your suppression name here>
   ThreadSanitizer:Race
   fun:tern::RRScheduler::signal
-  fun:tern::RecorderRT::syncSignal
-  fun:tern::RecorderRT::pthreadMutexUnlock
-  fun:tern_pthread_mutex_unlock
-  fun:pthread_mutex_unlock
-  fun:thread_func_1
-  fun:__tern_thread_func
-}
-{
-  <Put your suppression name here>
-  ThreadSanitizer:Race
-  fun:tern::RRScheduler::signal
-  fun:tern::RecorderRT::syncSignal
-  fun:tern::RecorderRT::pthreadMutexUnlock
-  fun:tern_pthread_mutex_unlock
-  fun:pthread_mutex_unlock
-  fun:thread_func_1
-  fun:__tern_thread_func
-}
-{
-  <Put your suppression name here>
-  ThreadSanitizer:Race
-  fun:tern::RRScheduler::signal
-  fun:tern::RecorderRT::syncSignal
-  fun:tern::RecorderRT::pthreadMutexUnlock
-  fun:tern_pthread_mutex_unlock
-  fun:pthread_mutex_unlock
-  fun:thread_func_1
-  fun:__tern_thread_func
-}
-{
-  <Put your suppression name here>
-  ThreadSanitizer:Race
-  fun:tern::RRScheduler::fireTimeouts
-  fun:tern::RRScheduler::incTurnCount
-  fun:tern::RecorderRT::pthreadMutexUnlock
-  fun:tern_pthread_mutex_unlock
-  fun:pthread_mutex_unlock
-  fun:thread_func_1
-  fun:__tern_thread_func
-}
-{
-  <Put your suppression name here>
-  ThreadSanitizer:Race
-  fun:tern::RRScheduler::putTurn
-  fun:tern::RecorderRT::pthreadMutexUnlock
-  fun:tern_pthread_mutex_unlock
-  fun:pthread_mutex_unlock
-  fun:thread_func_1
-  fun:__tern_thread_func
+	...
 }
 {
   <Put your suppression name here>
   ThreadSanitizer:Race
   fun:std::_List_node_base::_M_unhook
-  fun:.clone.133]
-  fun:tern::RRScheduler::signal
-  fun:tern::RRScheduler::putTurn
-  fun:tern::RecorderRT::threadEnd
-  fun:tern_thread_end
-  fun:tern_pthread_exit
-  fun:__tern_thread_func
-}
-{
-  <Put your suppression name here>
-  ThreadSanitizer:Race
-  fun:std::_List_node_base::_M_unhook
-  fun:.clone.133]
-  fun:tern::RRScheduler::signal
-  fun:tern::RRScheduler::putTurn
-  fun:tern::RecorderRT::threadEnd
-  fun:tern_thread_end
-  fun:tern_pthread_exit
-  fun:__tern_thread_func
-}
-{
-  <Put your suppression name here>
-  ThreadSanitizer:Race
-  fun:tern::RRScheduler::signal
-  fun:tern::RRScheduler::putTurn
-  fun:tern::RecorderRT::threadEnd
-  fun:tern_thread_end
-  fun:tern_pthread_exit
-  fun:__tern_thread_func
+	...
 }
 {
   <Put your suppression name here>
   ThreadSanitizer:Race
   fun:std::tr1::_Hashtable::_M_insert_bucket
   fun:tern::RRScheduler::putTurn
-  fun:tern::RecorderRT::threadEnd
-  fun:tern_thread_end
-  fun:tern_pthread_exit
-  fun:__tern_thread_func
+	...
 }
 {
   <Put your suppression name here>
   ThreadSanitizer:Race
   fun:std::tr1::_Hashtable::erase
   fun:tern::RRScheduler::putTurn
-  fun:tern::RecorderRT::threadEnd
-  fun:tern_thread_end
-  fun:tern_pthread_exit
-  fun:__tern_thread_func
-}
-{
-  <Put your suppression name here>
-  ThreadSanitizer:Race
-  fun:tern::RRScheduler::putTurn
-  fun:tern::RecorderRT::threadEnd
-  fun:tern_thread_end
-  fun:tern_pthread_exit
-  fun:__tern_thread_func
-}
-{
-  <Put your suppression name here>
-  ThreadSanitizer:Race
-  fun:tern::RRScheduler::putTurn
-  fun:tern::RecorderRT::threadEnd
-  fun:tern_thread_end
-  fun:tern_pthread_exit
-  fun:__tern_thread_func
+	...
 }
 {
   <Put your suppression name here>
   ThreadSanitizer:Race
   fun:tern::RRScheduler::wait
-  fun:tern::RecorderRT::pthreadJoin
-  fun:tern_pthread_join
-  fun:pthread_join
-  fun:main
+	...
 }
 {
   <Put your suppression name here>
   ThreadSanitizer:Race
   fun:tern::RecorderRT::pthreadJoin
-  fun:tern_pthread_join
-  fun:pthread_join
-  fun:main
+	...
 }
 {
   <Put your suppression name here>
   ThreadSanitizer:Race
-  fun:std::tr1::_Hashtable::_M_insert_bucket
-  fun:tern::RRScheduler::putTurn
-  fun:tern::RecorderRT::threadEnd
-  fun:tern_thread_end
-  fun:tern_pthread_exit
-  fun:__tern_thread_func
+  fun:pthread_mutex_trylock
+	...
 }
 {
-  <Put your suppression name here>
-  ThreadSanitizer:Race
-  fun:arena_thread_freeres
-  fun:__libc_thread_freeres
-  fun:start_thread
+	<tern_barrier_wait>
+	ThreadSanitizer:Race
+	fun:tern::RecorderRT::pthreadBarrierWait
+	...
 }
 {
-  <Put your suppression name here>
-  ThreadSanitizer:Race
-  fun:tern::RecorderRT::pthreadJoin
-  fun:tern_pthread_join
-  fun:pthread_join
-  fun:main
+	<barrier_wait>
+	ThreadSanitizer:Race
+	fun:pthread_barrier_wait
+	...
 }
 {
-  <Put your suppression name here>
-  ThreadSanitizer:Race
-  fun:tern::RRScheduler::fireTimeouts
-  fun:tern::RRScheduler::incTurnCount
-  fun:tern::RecorderRT::idle_sleep
-  fun:tern_idle_sleep
-  fun:idle_thread
-  fun:__tern_thread_func
+	<lineup_start>
+	ThreadSanitizer:Race
+	fun:tern::RecorderRT::lineupStart
+	...
 }
 {
-  <Put your suppression name here>
-  ThreadSanitizer:Race
-  fun:tern::RRScheduler::fireTimeouts
-  fun:tern::RRScheduler::incTurnCount
-  fun:tern::RecorderRT::idle_sleep
-  fun:tern_idle_sleep
-  fun:idle_thread
-  fun:__tern_thread_func
+	<lineup_end>
+	ThreadSanitizer:Race
+	fun:tern::RecorderRT::lineupEnd
+	...
 }
 {
-  <Put your suppression name here>
-  ThreadSanitizer:Race
-  fun:tern::RecorderRT::pthreadJoin
-  fun:tern_pthread_join
-  fun:__tern_prog_end
-  fun:__run_exit_handlers
-  fun:exit
-  fun:exit
+	<next>
+	ThreadSanitizer:Race
+	fun:tern::RRScheduler::next
+	...
 }
-
+{
+	<wakeUpIdleThread>
+	fun:tern::RRScheduler::wakeUpIdleThread
+	...
+}
+{
+	<nonDetStart>
+	fun:tern::RecorderRT::nonDetStart
+	...
+}
+{
+	<check_wakeup>
+	fun:tern::RRScheduler::check_wakeup
+	...
+}
+{
+	<tern_cond_broadcast>
+	fun:pthread_cond_broadcast
+	...
+}
