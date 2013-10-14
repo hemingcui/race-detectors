@@ -1,0 +1,38 @@
+#!/bin/bash
+
+VER=1.1
+rm -rf tsan1
+if [ ! -f MPlayer-$VER.tar.gz ]; then
+    wget http://www.mplayerhq.hu/MPlayer/releases/MPlayer-$VER.tar.gz
+fi
+if [ ! -f input.mp4 ]; then
+	wget https://2459d6dc103cb5933875-c0245c5c937c5dedcca3f1764ecc9b2f.ssl.cf2.rackcdn.com/osdi12/haussler.mp4
+	mv haussler.mp4 input.mp4
+fi
+mkdir tsan1
+pushd tsan1
+tar zxvf ../MPlayer-$VER.tar.gz
+
+# Dep-lib.
+#sudo apt-get install libmp3lame-dev
+
+# Input command (with any mpg file from this link: http://www.fileformat.info/format/mpeg/sample/index.htm).
+#./mencoder input.mpg -o output.avi -oac mp3lame -ovc lavc -lavcopts threads=4
+
+# Old command.
+# Build mplayer. Most of the configuration options are used to avoid executing asm, which is not supported in KLEE.
+#LD=llvm-ld ./configure --cc=$LLVM_ROOT/scripts/llgcc --ranlib=llvm-ranlib --as=llvm-as --ar=llvm-ar --yasm= \
+#        --disable-nemesi --disable-live --disable-speex --disable-mplayer --extra-cflags="-I $TERN_ROOT/klee/klee-uclibc/include$
+#        --disable-runtime-cpudetection --disable-fastmemcpy --disable-iconv --disable-mmx --disable-mmxext \
+#        --disable-sse --disable-sse2 --disable-ssse3 --disable-vstream
+
+cd MPlayer-$VER
+patch -p1 < ../add-xtern-annot.patch
+./configure --disable-mplayer --yasm= --extra-cflags="-g \
+  -I$XTERN_ROOT/include -L$XTERN_ROOT/dync_hook  -Wl,--rpath,$XTERN_ROOT/dync_hook -lxtern-annot"
+#./configure --disable-mplayer --yasm= --extra-cflags="-g -fPIE" --extra-ldflags="-pie"
+# -fPIE -pie -fsanitize=thread"
+make -j25
+mv mencoder ../
+
+popd
