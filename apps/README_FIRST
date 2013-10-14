@@ -2,3 +2,12 @@ Here are apps runable, or partially runable using the following tools:
 1. Thread Sanitizer v1
 2. Thread Sanitizer v2
 3. Relay
+
+In every folder, run
+./mk-tsan1
+./mk-tsan2
+./mk-relay
+to prepare for data race detection.
+
+Then, use make command to detect the data race,
+you will see error ignored in make process, which is normal

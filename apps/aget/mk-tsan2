@@ -1,0 +1,23 @@
+#!/bin/bash
+
+
+VER=0.4.1
+rm -rf tsan2
+if [ ! -f aget-$VER.tar.gz ]; then
+    wget http://www.enderunix.org/aget/aget-$VER.tar.gz
+fi
+mkdir tsan2
+pushd tsan2
+tar zxvf ../aget-$VER.tar.gz
+pushd aget-$VER
+#patch -p1 < ../for-dbug-1.patch
+patch -p1 < ../../fix-off-by-one.patch
+patch -p1 < ../../fix-pwrite-bug.patch
+
+# This is a patch in order to make aget work with the mongoose web server. Provided by Jiri.
+# I did some sample run, and the performance of downloading from clic server is roughly the same.
+
+make CFLAGS='-D_GNU_SOURCE -g -w' CC="clang -fsanitize=thread -fPIE" LDFLAGS="-fsanitize=thread -pie"
+cp aget ../
+popd
+popd

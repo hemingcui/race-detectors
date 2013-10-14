@@ -36,7 +36,7 @@ relay:relay/$(DIR)/ciltrees
 	@echo "        ------Relay Static Analyzer------"
 	-PWD=`pwd`;\
 	cd $(DATA_RACE_DETECTION_ROOT)/relay/relay-radar;\
-	./relay_single.sh ${PWD}/relay/$(DIR)/ciltrees
+	./relay_single.sh ${PWD}/relay/$(DIR)/ciltrees > /dev/null
 	@cp relay/$(DIR)/ciltrees/log.relay relay.log
 	@grep "Total Warnings:" relay.log
 test:tsan1 parrot-tsan1 tsan1-hybrid parrot-tsan1-hybrid helgrind parrot-helgrind

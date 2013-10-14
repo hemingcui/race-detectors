@@ -1,0 +1,22 @@
+#!/bin/bash
+
+
+VER=0.4.1
+rm -rf relay
+if [ ! -f aget-$VER.tar.gz ]; then
+    wget http://www.enderunix.org/aget/aget-$VER.tar.gz
+fi
+mkdir relay
+pushd relay
+tar zxvf ../aget-$VER.tar.gz
+pushd aget-$VER
+#patch -p1 < ../for-dbug-1.patch
+patch -p1 < ../../fix-off-by-one.patch
+patch -p1 < ../../fix-pwrite-bug.patch
+
+# This is a patch in order to make aget work with the mongoose web server. Provided by Jiri.
+# I did some sample run, and the performance of downloading from clic server is roughly the same.
+CFLAGS="-D_GNU_SOURCE -g -w" $DATA_RACE_DETECTION_ROOT/relay/relay-radar/scripts/intercept.sh make -e
+$DATA_RACE_DETECTION_ROOT/relay/relay-radar/scripts/dump-with-stats.sh
+popd
+popd
