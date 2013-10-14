@@ -1,0 +1,17 @@
+#!/bin/bash
+
+VER=1.0
+if [ ! -f pfscan-$VER.tar.gz ]; then
+    wget ftp://ftp.lysator.liu.se/pub/unix/pfscan/pfscan-$VER.tar.gz
+fi
+rm -rf tsan2
+mkdir tsan2
+pushd tsan2
+tar zxvf ../pfscan-$VER.tar.gz
+pushd pfscan-$VER
+patch -p1 < ../../fix_cvar_init.patch
+make LNX_CC="clang -fsanitize=thread -fPIE -pie" lnx
+popd
+mv pfscan-$VER/pfscan .
+popd
+

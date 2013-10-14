@@ -1,0 +1,17 @@
+#!/bin/bash
+
+VER=1.0
+if [ ! -f pfscan-$VER.tar.gz ]; then
+    wget ftp://ftp.lysator.liu.se/pub/unix/pfscan/pfscan-$VER.tar.gz
+fi
+rm -rf relay
+mkdir relay
+pushd relay
+tar zxvf ../pfscan-$VER.tar.gz
+pushd pfscan-$VER
+patch -p1 < ../../fix_cvar_init.patch
+cp ../../gcc-log.txt .
+$DATA_RACE_DETECTION_ROOT/relay/relay-radar/scripts/dump-with-stats.sh
+popd
+popd
+

@@ -1,0 +1,5 @@
+duppy -Wall -g -O    -c -o pfscan.o pfscan.c
+duppy -Wall -g -O    -c -o bm.o bm.c
+duppy -Wall -g -O    -c -o version.o version.c
+duppy -Wall -g -O    -c -o pqueue.o pqueue.c
+duppy -Wall -g -O -Wl,-s  -o pfscan pfscan.o bm.o version.o pqueue.o -lpthread -lnsl
