@@ -1,17 +1,20 @@
 PARROT=parrot.sh
-all:tsan1/$(EXE)
-$(PARROT):all
+all:
+	./mk-tsan1
+	./mk-tsan2
+	if [ -f mk-relay ]; then ./mk-relay; fi
+$(PARROT):tsan1/$(EXE)
 	@echo "LD_PRELOAD=$(XTERN_ROOT)/dync_hook/interpose.so ./tsan1/$(EXE) $(ARGS)" > $(PARROT)
 	@chmod +x $(PARROT)
-tsan1:all
+tsan1:tsan1/$(EXE)
 	@echo "        ------Thread Sanitizer------Pure Happens-Before"
 	-$(DATA_RACE_DETECTION_ROOT)/thread-sanitizer/install/bin/valgrind --trace-children=yes --read-var-info=yes --log-file=$@.log --suppressions=$(DATA_RACE_DETECTION_ROOT)/thread-sanitizer/libc.supp --tool=tsan ./tsan1/$(EXE) $(ARGS)
 	@grep "ThreadSanitizer summary" $@.log
-tsan1-hybrid:all
+tsan1-hybrid:tsan1/$(EXE)
 	@echo "        ------Thread Sanitizer------Hybrid"
 	-$(DATA_RACE_DETECTION_ROOT)/thread-sanitizer/install/bin/valgrind --trace-children=yes --read-var-info=yes --log-file=$@.log --suppressions=$(DATA_RACE_DETECTION_ROOT)/thread-sanitizer/libc.supp --tool=tsan --hybrid=yes ./tsan1/$(EXE) $(ARGS)
 	@grep "ThreadSanitizer summary" $@.log
-helgrind:all
+helgrind:tsan1/$(EXE)
 	@echo "        ------Helgrind------Happens-Before"
 	-$(DATA_RACE_DETECTION_ROOT)/thread-sanitizer/install/bin/valgrind --trace-children=yes --read-var-info=yes --log-file=$@.log --suppressions=$(DATA_RACE_DETECTION_ROOT)/thread-sanitizer/libc.supp --tool=helgrind ./tsan1/$(EXE) $(ARGS)
 	@grep "ERROR SUMMARY" $@.log
@@ -39,8 +42,10 @@ relay:relay/$(DIR)/ciltrees
 	./relay_single.sh ${PWD}/relay/$(DIR)/ciltrees > /dev/null
 	@cp relay/$(DIR)/ciltrees/log.relay relay.log
 	@grep "Total Warnings:" relay.log
-test:tsan1 parrot-tsan1 tsan1-hybrid parrot-tsan1-hybrid helgrind parrot-helgrind
+detect:tsan1 tsan1-hybrid tsan2
+	@if [ -f mk-relay ]; then make relay; fi
+detect-all:tsan1 parrot-tsan1 tsan1-hybrid parrot-tsan1-hybrid helgrind parrot-helgrind tsan2
+	@if [ -f mk-relay ]; then make relay; fi
 clean:
-	rm -rf tsan1/$(EXE) $(PARROT) *.log dump.options
-.PHONY:
-	clean all
+	rm -rf tsan1 tsan2 relay $(PARROT) *.log* dump.options
+.PHONY: all clean tsan1 tsan2 relay
