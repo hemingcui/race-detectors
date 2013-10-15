@@ -27,9 +27,8 @@ tar zxvf ../MPlayer-$VER.tar.gz
 #        --disable-sse --disable-sse2 --disable-ssse3 --disable-vstream
 
 cd MPlayer-$VER
-./configure --cc=clang --disable-mplayer --yasm= --extra-cflags=-g
-sed -i -e "s/CONFIGURATION\ .*$/CONFIGURATION \"--disable-mplayer --yasm= --cc=clang --extra-cflags=-g -fsanitize=thread -fPIE --extra-ldflags=-fsanitize=thread -pie\"/g" config.h
-sed -i -e "s/CONFIGURATION.*$/CONFIGURATION = --disable-mplayer --yasm= --cc=clang --extra-cflags=-g -fsanitize=thread -fPIE --extra-ldflags=-fsanitize=thread -pie/g" -e "s/CFLAGS\ \ \ =/CFLAGS\ \ \ =\ -fsanitize=thread -fPIE/g" -e"s/CXXFLAGS\ =/CXXFLAGS\ =-fsanitize=thread -pie/g" config.mak
-#make -j25
-#mv mencoder ../
+cd ffmpeg
+./configure --disable-yasm --extra-cflags="-g -fsanitize=thread -fPIE" --extra-ldflags="-L$HOME/lib64 -Wl,--rpath,$HOME/lib64 -fsanitize=thread -pie" --extra-libs="-ltsan" --enable-debug=3
+make -j25
+mv ffmpeg ../..
 popd

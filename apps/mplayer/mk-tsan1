@@ -27,12 +27,10 @@ tar zxvf ../MPlayer-$VER.tar.gz
 #        --disable-sse --disable-sse2 --disable-ssse3 --disable-vstream
 
 cd MPlayer-$VER
-patch -p1 < ../add-xtern-annot.patch
-./configure --disable-mplayer --yasm= --extra-cflags="-g \
-  -I$XTERN_ROOT/include -L$XTERN_ROOT/dync_hook  -Wl,--rpath,$XTERN_ROOT/dync_hook -lxtern-annot"
-#./configure --disable-mplayer --yasm= --extra-cflags="-g -fPIE" --extra-ldflags="-pie"
-# -fPIE -pie -fsanitize=thread"
+patch -p1 < ../../add-xtern-annot.patch
+cd ffmpeg
+./configure --disable-yasm --extra-cflags="-g -I$XTERN_ROOT/include" --extra-ldflags="-L$XTERN_ROOT/dync_hook  -Wl,--rpath,$XTERN_ROOT/dync_hook" --extra-libs="-lxtern-annot" --enable-debug=3
 make -j25
-mv mencoder ../
+mv ffmpeg ../..
 
 popd

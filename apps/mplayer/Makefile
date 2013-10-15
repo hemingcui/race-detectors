@@ -1,4 +1,4 @@
 DIR=Mplayer-1.1
-EXE=mencoder
-ARGS=input.mp4 -o output.avi -oac mp3lame -ovc lavc -lavcopts threads=4
+EXE=ffmpeg
+ARGS=-i input.mp4 output.avi -acodec libmp3lame -vcodec mpeg4 -threads 4
 include ../Default.mk
