@@ -14,3 +14,5 @@ make
 make check
 popd
 make
+cd scripts
+patch myld.pl < ../../ld.patch

@@ -29,7 +29,7 @@ tar zxvf ../MPlayer-$VER.tar.gz
 cd MPlayer-$VER
 patch -p1 < ../../add-xtern-annot.patch
 cd ffmpeg
-./configure --disable-yasm --extra-cflags="-g -I$XTERN_ROOT/include" --extra-ldflags="-L$XTERN_ROOT/dync_hook  -Wl,--rpath,$XTERN_ROOT/dync_hook" --extra-libs="-lxtern-annot" --enable-debug=3
+./configure --disable-yasm --extra-cflags="-g -I$XTERN_ROOT/include" --extra-ldflags="-L$XTERN_ROOT/dync_hook  -Wl,--rpath,$XTERN_ROOT/dync_hook" --extra-libs="-lxtern-annot" --enable-debug=3 --disable-stripping
 make -j25
 mv ffmpeg ../..
 

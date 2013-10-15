@@ -1,7 +1,6 @@
 #!/bin/bash
-
-VER=1.1
-rm -rf tsan2
+jER=1.1
+rm -rf tsan1
 if [ ! -f MPlayer-$VER.tar.gz ]; then
     wget http://www.mplayerhq.hu/MPlayer/releases/MPlayer-$VER.tar.gz
 fi
@@ -9,8 +8,8 @@ if [ ! -f input.mp4 ]; then
 	wget https://2459d6dc103cb5933875-c0245c5c937c5dedcca3f1764ecc9b2f.ssl.cf2.rackcdn.com/osdi12/haussler.mp4
 	mv haussler.mp4 input.mp4
 fi
-mkdir tsan2
-pushd tsan2
+mkdir relay
+pushd relay
 tar zxvf ../MPlayer-$VER.tar.gz
 
 # Dep-lib.
@@ -28,7 +27,8 @@ tar zxvf ../MPlayer-$VER.tar.gz
 
 cd MPlayer-$VER
 cd ffmpeg
-./configure --disable-yasm --extra-cflags="-g -fsanitize=thread -fPIE" --extra-ldflags="-L$HOME/lib64 -Wl,--rpath,$HOME/lib64 -fsanitize=thread -pie" --extra-libs="-ltsan" --enable-debug=3 --disable-stripping
-make -j25
-mv ffmpeg_g ../..
+./configure --disable-yasm --disable-stripping --enable-debug=3
+CFLAGS="-D_GNU_SOURCE -g -w" $DATA_RACE_DETECTION_ROOT/relay/relay-radar/scripts/intercept.sh make -e ffmpeg_g
+$DATA_RACE_DETECTION_ROOT/relay/relay-radar/scripts/dump-with-stats.sh
+
 popd
