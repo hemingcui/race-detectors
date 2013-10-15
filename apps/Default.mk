@@ -6,33 +6,52 @@ all:
 $(PARROT):tsan1/$(EXE)
 	@echo "LD_PRELOAD=$(XTERN_ROOT)/dync_hook/interpose.so ./tsan1/$(EXE) $(ARGS)" > $(PARROT)
 	@chmod +x $(PARROT)
+none:tsan1/$(EXE)
+	@echo "        ------Nothing------"
+	-$(PRECMD)\
+	./tsan1/$(EXE) $(ARGS)\
+	$(POSTCMD)
 tsan1:tsan1/$(EXE)
 	@echo "        ------Thread Sanitizer------Pure Happens-Before"
-	-$(DATA_RACE_DETECTION_ROOT)/thread-sanitizer/install/bin/valgrind --trace-children=yes --read-var-info=yes --log-file=$@.log --suppressions=$(DATA_RACE_DETECTION_ROOT)/thread-sanitizer/libc.supp --tool=tsan ./tsan1/$(EXE) $(ARGS)
+	-$(PRECMD)\
+	$(DATA_RACE_DETECTION_ROOT)/thread-sanitizer/install/bin/valgrind --trace-children=yes --read-var-info=yes --log-file=$@.log --suppressions=$(DATA_RACE_DETECTION_ROOT)/thread-sanitizer/libc.supp --tool=tsan ./tsan1/$(EXE) $(ARGS)\
+	$(POSTCMD)
 	@grep "ThreadSanitizer summary" $@.log
 tsan1-hybrid:tsan1/$(EXE)
 	@echo "        ------Thread Sanitizer------Hybrid"
+	$(PRECMD)
 	-$(DATA_RACE_DETECTION_ROOT)/thread-sanitizer/install/bin/valgrind --trace-children=yes --read-var-info=yes --log-file=$@.log --suppressions=$(DATA_RACE_DETECTION_ROOT)/thread-sanitizer/libc.supp --tool=tsan --hybrid=yes ./tsan1/$(EXE) $(ARGS)
+	$(POSTCMD)
 	@grep "ThreadSanitizer summary" $@.log
 helgrind:tsan1/$(EXE)
 	@echo "        ------Helgrind------Happens-Before"
+	$(PRECMD)
 	-$(DATA_RACE_DETECTION_ROOT)/thread-sanitizer/install/bin/valgrind --trace-children=yes --read-var-info=yes --log-file=$@.log --suppressions=$(DATA_RACE_DETECTION_ROOT)/thread-sanitizer/libc.supp --tool=helgrind ./tsan1/$(EXE) $(ARGS)
+	$(POSTCMD)
 	@grep "ERROR SUMMARY" $@.log
 parrot-tsan1:$(PARROT)
 	@echo "        ------Thread Sanitizer------Pure Happens-Before--------PARROT!!!!!!!!"
+	$(PRECMD)
 	-$(DATA_RACE_DETECTION_ROOT)/thread-sanitizer/install/bin/valgrind --trace-children=yes --read-var-info=yes --log-file=$@.log --suppressions=$(DATA_RACE_DETECTION_ROOT)/thread-sanitizer/libc.supp --suppressions=$(DATA_RACE_DETECTION_ROOT)/thread-sanitizer/parrot-tsan.supp --tool=tsan ./$(PARROT)
+	$(POSTCMD)
 	@grep "ThreadSanitizer summary" $@.log
 parrot-tsan1-hybrid:$(PARROT)
 	@echo "        ------Thread Sanitizer------Hybrid---------------------PARROT!!!!!!!!"
+	$(PRECMD)
 	-$(DATA_RACE_DETECTION_ROOT)/thread-sanitizer/install/bin/valgrind --trace-children=yes --read-var-info=yes --log-file=$@.log --suppressions=$(DATA_RACE_DETECTION_ROOT)/thread-sanitizer/libc.supp --suppressions=$(DATA_RACE_DETECTION_ROOT)/thread-sanitizer/parrot-tsan.supp --suppressions=$(DATA_RACE_DETECTION_ROOT)/thread-sanitizer/parrot-tsan-hybrid.supp --tool=tsan --hybrid=yes ./$(PARROT)
+	$(POSTCMD)
 	@grep "ThreadSanitizer summary" $@.log
 parrot-helgrind:$(PARROT)
 	@echo "        ------Helgrind------Happens-Before---------------------PARROT!!!!!!!!"
+	$(PRECMD)
 	-$(DATA_RACE_DETECTION_ROOT)/thread-sanitizer/install/bin/valgrind --suppressions=$(DATA_RACE_DETECTION_ROOT)/thread-sanitizer/parrot-helgrind.supp --trace-children=yes --read-var-info=yes --log-file=$@.log --suppressions=$(DATA_RACE_DETECTION_ROOT)/thread-sanitizer/libc.supp --tool=helgrind ./$(PARROT)
+	$(POSTCMD)
 	@grep "ERROR SUMMARY" $@.log
 tsan2:tsan2/$(EXE)
 	@echo "        ------Thread Sanitizer version 2------"
+	$(PRECMD)
 	-TSAN_OPTIONS="log_path=tsan2.log" ./tsan2/$(EXE) $(ARGS)
+	$(POSTCMD)
 	mv tsan2.log.* tsan2.log
 	@grep "warnings" $@.log
 relay:relay/$(DIR)/ciltrees
