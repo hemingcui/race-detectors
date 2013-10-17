@@ -1,0 +1,21 @@
+#!/bin/bash
+set -e
+APP_DIR=`pwd`
+VER=2.4.33
+if [ ! -f openldap-$VER.tgz ]; then
+    wget http://www.openldap.org/software/download/OpenLDAP/openldap-release/openldap-$VER.tgz
+fi
+
+rm -rf relay
+mkdir relay
+cd relay
+tar zxvf ../openldap-$VER.tgz
+
+# Build.
+cd openldap-$VER
+patch -p1 < ../../add-resp-to-mtread.patch
+mkdir obj
+cd obj
+CFLAGS="-g -O0" ../configure
+$DATA_RACE_DETECTION_ROOT/relay/relay-radar/scripts/intercept.sh make -e -j25
+$DATA_RACE_DETECTION_ROOT/relay/relay-radar/scripts/dump-with-stats.sh

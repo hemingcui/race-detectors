@@ -16,7 +16,7 @@ tar zxvf ../openldap-$VER.tgz
 tar xvzf ../db-5.3.15.tar.gz
 pushd db-5.3.15
 pushd build_unix
-CC=gcc-4.9 CFLAGS="-fsanitize=thread -fPIE" LDFLAGS="-fsanitize=thread -pie" ../dist/configure --prefix=$HOME
+CC=gcc-4.9 CFLAGS="-fsanitize=thread -fPIE" LDFLAGS="-fsanitize=thread -pie" ../dist/configure --prefix=$APP_DIR/tsan2/install
 make -j25
 make install -j25
 popd
@@ -26,7 +26,7 @@ cd openldap-$VER
 patch -p1 < ../../add-resp-to-mtread.patch
 mkdir obj
 cd obj
-CC=gcc-4.9 CFLAGS="-g -O0 -fsanitize=thread -fPIE" CPPFLAGS="-I$HOME/include" LDFLAGS="-L$HOME/lib -fsanitize=thread -pie -Wl,-rpath -Wl,$HOME/lib" ../configure --prefix=$APP_DIR/tsan2/install
+CC=gcc-4.9 CFLAGS="-g -O0 -fsanitize=thread -fPIE" CPPFLAGS="-I$APP_DIR/tsan2/install/include" LDFLAGS="-L$APP_DIR/tsan2/install/lib -fsanitize=thread -pie -Wl,-rpath -Wl,$APP_DIR/tsan2/install/lib" ../configure --prefix=$APP_DIR/tsan2/install
 make -j25
 make install -j25
 cd $APP_DIR
