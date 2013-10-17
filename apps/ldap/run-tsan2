@@ -1,0 +1,8 @@
+#!/bin/bash
+cd tsan2/openldap-2.4.33/obj/tests
+TSAN_OPTIONS="log_path=../../../../tsan2.log" /mnt/sdb/for-xinan/race-detectors/apps/ldap/tsan2/openldap-2.4.33/obj/tests/../servers/slapd/slapd -s0 -f /mnt/sdb/for-xinan/race-detectors/apps/ldap/tsan2/openldap-2.4.33/obj/tests/testrun/slapd.1.conf -h ldap://localhost:9011/ -d stats &
+sleep 5
+/usr/bin/time -p ../../../slapd-mtread -H ldap://localhost:9011/ -D cn=Manager,dc=example,dc=com -w secret -e cn=Monitor -c 4 -m 4 -L 100 -l 50
+killall exe
+killall slapd
+mv tsan2.log.* tsan2.log
