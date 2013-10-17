@@ -1,0 +1,51 @@
+#!/bin/bash
+set -e
+APP_DIR=`pwd`
+VER=2.4.33
+if [ ! -f openldap-$VER.tgz ]; then
+    wget http://www.openldap.org/software/download/OpenLDAP/openldap-release/openldap-$VER.tgz
+fi
+if [ ! -f db-5.3.15.tar.gz ]; then
+        wget http://download.oracle.com/berkeley-db/db-5.3.15.tar.gz
+fi
+
+rm -rf tsan2
+mkdir tsan2
+cd tsan2
+tar zxvf ../openldap-$VER.tgz
+tar xvzf ../db-5.3.15.tar.gz
+pushd db-5.3.15
+pushd build_unix
+CC=gcc-4.9 CFLAGS="-fsanitize=thread -fPIE" LDFLAGS="-fsanitize=thread -pie" ../dist/configure --prefix=$HOME
+make -j25
+make install -j25
+popd
+popd
+# Build.
+cd openldap-$VER
+patch -p1 < ../../add-resp-to-mtread.patch
+mkdir obj
+cd obj
+CC=gcc-4.9 CFLAGS="-g -O0 -fsanitize=thread -fPIE" CPPFLAGS="-I$HOME/include" LDFLAGS="-L$HOME/lib -fsanitize=thread -pie -Wl,-rpath -Wl,$HOME/lib" ../configure --prefix=$APP_DIR/tsan2/install
+make -j25
+make install -j25
+cd $APP_DIR
+# We use this one because it has debug symbols.
+ln -s $APP_DIR/xtern-test-mt-hot $APP_DIR/tsan2/openldap-$VER/tests/scripts/xtern-test-mt-hot
+ln -s $APP_DIR/local.options $APP_DIR/tsan2/openldap-$VER/obj/tests/local.options
+ln -s $APP_DIR/tsan2/openldap-$VER/obj/servers/slapd/slapd $APP_DIR/tsan2/install/libexec/slapd.x86
+cp $APP_DIR/tsan2/install/etc/openldap/slapd.conf $APP_DIR/tsan2/install/etc/openldap/slapd.conf.bak
+cp slapd.conf.template $APP_DIR/tsan2/install/etc/openldap/slapd.conf
+
+# Add benchmark.
+cd tsan2/openldap-$VER
+patch -p1 < ../../only-xtern-test-mt-hot.patch
+patch -p1 < ../../only-run-bdb-tests.patch
+cd $APP_DIR/tsan2
+ln -s $APP_DIR/tsan2/openldap-$VER/obj/servers/slapd/slapd
+ln -s $APP_DIR/tsan1/openldap-$VER/obj/tests/progs/slapd-mtread
+
+cd openldap-$VER/obj/tests
+set +e
+make test
+sed -i -e "s/\.\//tsan1\/openldap-${VER}\/obj\/tests\//g" testrun/slapd.1.conf

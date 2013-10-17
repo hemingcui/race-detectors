@@ -28,7 +28,7 @@ tar zxvf ../MPlayer-$VER.tar.gz
 
 cd MPlayer-$VER
 cd ffmpeg
-./configure --disable-yasm --extra-cflags="-g -fsanitize=thread -fPIE" --extra-ldflags="-L$HOME/lib64 -Wl,--rpath,$HOME/lib64 -fsanitize=thread -pie" --extra-libs="-ltsan" --enable-debug=3 --disable-stripping
+./configure --cc=gcc-4.9 --cxx=g++-4.9 --disable-yasm --extra-cflags="-g -fsanitize=thread -fPIE" --extra-ldflags="-L$HOME/lib64 -Wl,--rpath,$HOME/lib64 -fsanitize=thread -pie" --extra-libs="-ltsan" --enable-debug=3 --disable-stripping
 make -j25
-mv ffmpeg_g ../..
+mv ffmpeg ../..
 popd

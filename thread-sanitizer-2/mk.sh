@@ -15,5 +15,5 @@ popd
 rm -rf gcc
 svn co svn://gcc.gnu.org/svn/gcc/trunk gcc
 cd gcc && mkdir build && cd build
-../configure --prefix=$PREFIX --enable-languages=c,c++ --disable-bootstrap --enable-checking=no
+CC=gcc-4.5 CXX=g++-4.5 CFLAGS="-g" CXXFLAGS="-g" ../configure --prefix=$PREFIX --enable-languages=c,c++ --disable-bootstrap --enable-checking=no
 make -j25 && make install -j25 || exit 1
