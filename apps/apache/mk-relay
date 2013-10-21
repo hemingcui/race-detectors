@@ -1,0 +1,12 @@
+#!/bin/bash
+if [ ! -f httpd-2.4.6.tar.bz2 ]; then
+wget http://apache.mesi.com.ar//httpd/httpd-2.4.6.tar.bz2
+fi
+rm -rf relay
+pushd relay
+tar xvjf ../httpd-2.4.6.tar.bz2
+cd httpd-2.4.6
+./configure
+$DATA_RACE_DETECTION_ROOT/relay/relay-radar/scripts/intercept.sh make -e -j25
+$DATA_RACE_DETECTION_ROOT/relay/relay-radar/scripts/dump-with-stats.sh
+popd
