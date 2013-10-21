@@ -1,0 +1,4 @@
+DIR=
+EXE=fft
+ARGS=-m24 -p4
+include ../Default.mk
